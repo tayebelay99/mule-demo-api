@@ -1,0 +1,9 @@
+salesforce:
+  username: ""
+  autorization.url: ""
+  type: ""
+  
+http:
+  host: ""
+  path: ""
+  port: ""  

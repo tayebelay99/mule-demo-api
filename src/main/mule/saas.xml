@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="5dee883d-f1c8-4650-a5b3-8d34ccfbd444" >
+		<http:request-connection host="${http.host}" port="${http.port}" />
+	</http:request-config>
+	<sub-flow name="get-records-subflow" doc:id="0a0ccc01-6f12-4d46-af3e-f2d754beed58" >
+		<ee:transform doc:name="Transform Message" doc:id="3f6b8bed-ca86-4923-b5e8-aa0c5afd5844" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="name" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes.queryParams.firstName]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<http:request method="GET" doc:name="GET Records" doc:id="63e2d30f-fea4-4190-bedb-ad48de4de6e2" config-ref="HTTP_Request_configuration" path="${http.path}">
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	client_secret : "Value",
+	client_id : "Value"
+}]]]></http:headers>
+			<http:query-params><![CDATA[#[{
+	"firstName": vars.name
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="915ccc68-16aa-4835-bccf-aca5658aea51" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="put-records-subflow" doc:id="6388b88e-1de0-4ef3-b940-9923bc640e4a" >
+		<http:request method="PUT" doc:name="Update Records" doc:id="d7ff7cec-af21-46f4-8b7d-5e680821a25c" config-ref="HTTP_Request_configuration" path="${http.path}/{id}" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	client_secret : "Value",
+	client_id : "Value"
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[id: vars.ID]]]></http:uri-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="dabf239b-c38c-4826-a77a-203974bfae06" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="patch-records-subflow" doc:id="9a41e25a-ac90-42ce-b7c3-1b450a559273" >
+		<http:request method="PATCH" doc:name="Update Record" doc:id="9a31dff4-e515-4083-a258-7656dfa2c239" config-ref="HTTP_Request_configuration" path="${http.path}/{id}" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	client_secret : "Value",
+	client_id : "Value"
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[id: vars.ID]]]></http:uri-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="73c701c2-c2dc-4515-ab76-a4639bd39fc1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="delete-records-subflow" doc:id="6072b5a9-273e-419c-bdd6-a3831ab22aa0" >
+		<http:request method="DELETE" doc:name="Delete Record" doc:id="f23455e4-1f1b-494d-9589-e53f7d08d3ad" config-ref="HTTP_Request_configuration" path="${http.path}/{id}" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	client_secret : "Value",
+	client_id : "Value"
+}]]]></http:headers>
+			<http:uri-params ><![CDATA[#[id: vars.ID]]]></http:uri-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="641c8e6b-f594-44c9-83ce-e9416bbdc378" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

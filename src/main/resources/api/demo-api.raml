@@ -1,0 +1,61 @@
+#%RAML 1.0
+version: v1.0
+title: Demo API
+
+traits:
+  client-id-required:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+
+
+/records:
+  is: [client-id-required]
+  get:
+    queryParameters: 
+      firstName:
+        required: false
+    responses: 
+      200:
+        body: 
+          application/json:
+            example: success
+              
+  post:
+    body: 
+      application/json:
+    responses: 
+      201:
+        body: 
+          application/json:
+            example: 
+              message: Record created.
+  
+  /{ID}:
+    is: [client-id-required]
+    get:
+      responses: 
+        200:
+          body: 
+            application/json:
+              example: success
+                
+    delete:
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Record deleted.
+    put:
+      body:
+        application/json:
+          example: Record updated.
+      responses:
+        200:
+          body:
+            application/json:
+              example:
+                message: Record updated 

@@ -1,0 +1,40 @@
+{
+  "configs": [
+    "router.xml",
+    "salesforce-test-suite.xml",
+    "errors.xml",
+    "saas-test-suite.xml",
+    "salesforce.xml",
+    "saas.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:mule-demo:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.3.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedResources": [
+        "log4j2.xml",
+        "errors.xml",
+        "salesforce.xml",
+        "saas.xml",
+        "application-types.xml",
+        "samplePayload/sampleSalesforcePayload.json",
+        "properties/properties.yaml",
+        "properties/properties-vault.yaml",
+        "api/demo-api.raml",
+        "router.xml",
+        "log4j2-test.xml",
+        "samplePayload.json"
+      ],
+      "includeTestDependencies": "true",
+      "exportedPackages": []
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}

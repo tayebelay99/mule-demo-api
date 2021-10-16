@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="salesforce-test-suite.xml" />
+	<munit:test name="salesforce-test-suite-upsert-record-to-salesforce-flowTest" doc:id="fdb97892-d66b-452b-8f98-0dfbed0a443e" description="Test">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock Transform" doc:id="9f43a2b8-df7b-4c3d-b77f-a09d92bcbfcb" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Transform Message for Salesforce" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="af0c8235-2088-4508-b60b-ab82ea3563e5" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+			<munit-tools:mock-when doc:name="Mock Flow Reference" doc:id="08801f53-2e6a-42ae-88db-0c7d99ed2af0" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Upsert Recrod to Salesforce" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="14425d91-9cd9-45b4-bd32-6cf7aa47f91e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to upsert-record-to-salesforce-flow" doc:id="469840bc-5180-4adb-9fef-c4eec48c622e" name="upsert-record-to-salesforce-flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="0f56ec3a-2c92-42a8-a617-eee20c353260" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Summary" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="2f0a9964-6665-4203-b119-54174f55f340" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+</mule>

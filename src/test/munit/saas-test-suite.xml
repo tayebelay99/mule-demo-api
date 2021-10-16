@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="saas-test-suite.xml" />
+	<munit:test name="saas-test-suite-get-records-subflowTest" doc:id="68df2af2-9da3-4031-81dc-6f771cbfedb4" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="4fc78d39-3e05-4efa-b512-22e3a50454cc" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Transform Message" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="3f6b8bed-ca86-4923-b5e8-aa0c5afd5844" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="1a17d86d-22f1-472e-9261-b2611e9c295e" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="GET Records" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="63e2d30f-fea4-4190-bedb-ad48de4de6e2" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get-records-subflow" doc:id="dc762e29-af6f-41e3-b145-96267af1cc52" name="get-records-subflow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="7c3b78d2-904e-444a-87c6-92f83c694066" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Transform Message" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="915ccc68-16aa-4835-bccf-aca5658aea51" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+</mule>
